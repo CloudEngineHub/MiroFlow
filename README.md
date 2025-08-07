@@ -54,8 +54,8 @@ MiroFlow is a framework for agent development that supports various language mod
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/MiroMindAsia/miroflow.git
-cd miroflow
+git clone https://github.com/MiroMindAI/MiroFlow.git
+cd MiroFlow
 git checkout mirothinker
 ```
 

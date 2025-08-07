@@ -54,7 +54,7 @@ class AnthropicLLMClient(LLMProviderClientBase):
             http_client_args["headers"] = {"trace-id": trace_id}
         if os.environ.get("HTTPS_PROXY"):
             http_client_args["proxy"] = os.environ.get("HTTPS_PROXY")
-            logger.debug(f"Info: Using proxy {http_client_args['proxy']}")
+            logger.info(f"Info: Using proxy {http_client_args['proxy']}")
 
         if self.async_client:
             return AsyncAnthropic(
@@ -85,7 +85,7 @@ class AnthropicLLMClient(LLMProviderClientBase):
             self.token_usage["total_output_tokens"] += (
                 getattr(usage_data, "output_tokens", 0) or 0
             )
-            logger.debug(
+            logger.info(
                 f"Current round token usage - Input: {getattr(usage_data, 'input_tokens', 0)}, "
                 f"Cache creation input: {getattr(usage_data, 'cache_creation_input_tokens', 0)}, "
                 f"Cache read input: {getattr(usage_data, 'cache_read_input_tokens', 0)}, "
@@ -97,7 +97,7 @@ class AnthropicLLMClient(LLMProviderClientBase):
                 "output_tokens": getattr(usage_data, "output_tokens", 0),
             }
         else:
-            logger.debug("Warning: No valid usage_data received.")
+            logger.info("Warning: No valid usage_data received.")
 
     @retry(wait=wait_fixed(10), stop=stop_after_attempt(5))
     async def _create_message(
@@ -113,7 +113,7 @@ class AnthropicLLMClient(LLMProviderClientBase):
         :param messages: Message history list.
         :return: Anthropic API response object or None (if error).
         """
-        logger.debug(
+        logger.info(
             "\n"
             + "-" * 20
             + f" Calling LLM ({'async' if self.async_client else 'sync'})"
@@ -165,13 +165,13 @@ class AnthropicLLMClient(LLMProviderClientBase):
             # Update token count
 
             self._update_token_usage(getattr(response, "usage", None))
-            logger.debug(f"LLM call status: {getattr(response, 'stop_reason', 'N/A')}")
+            logger.info(f"LLM call status: {getattr(response, 'stop_reason', 'N/A')}")
             return response, messages_copy
         except asyncio.CancelledError:
-            logger.debug("⚠️ LLM API call was cancelled during execution")
+            logger.info("⚠️ LLM API call was cancelled during execution")
             raise  # Re-raise to allow decorator to log it
         except Exception as e:
-            logger.debug(f"Anthropic LLM call failed: {str(e)}")
+            logger.info(f"Anthropic LLM call failed: {str(e)}")
             raise e
 
     def process_llm_response(
@@ -179,11 +179,11 @@ class AnthropicLLMClient(LLMProviderClientBase):
     ) -> tuple[str, bool, list]:
         """Process Anthropic LLM response"""
         if not llm_response:
-            logger.debug("❌ LLM call failed, skipping this response.")
+            logger.info("❌ LLM call failed, skipping this response.")
             return "", True, message_history
 
         if not hasattr(llm_response, "content") or not llm_response.content:
-            logger.debug("❌ LLM response is empty or contains no content.")
+            logger.info("❌ LLM response is empty or contains no content.")
             return "", True, message_history
 
         # Extract response content
@@ -210,7 +210,7 @@ class AnthropicLLMClient(LLMProviderClientBase):
             {"role": "assistant", "content": assistant_response_content}
         )
 
-        logger.debug(f"LLM Response: {assistant_response_text}")
+        logger.info(f"LLM Response: {assistant_response_text}")
 
         return assistant_response_text, False, message_history
 
@@ -421,7 +421,7 @@ class AnthropicLLMClient(LLMProviderClientBase):
                 else:
                     # If content is not a list (e.g., plain text), add as is without cache control
                     # Or adjust logic as needed
-                    logger.debug(
+                    logger.info(
                         "Warning: User message content is not in expected list format, cache control not applied."
                     )
                     cached_messages.append(turn)

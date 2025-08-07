@@ -136,7 +136,7 @@ class BackendSpanExporter(TracingExporter):
 
                 # If the response is successful, break out of the loop
                 if response.status_code < 300:
-                    logger.debug(f"Exported {len(items)} items")
+                    logger.info(f"Exported {len(items)} items")
                     return
 
                 # If the response is a client error (4xx), we wont retry

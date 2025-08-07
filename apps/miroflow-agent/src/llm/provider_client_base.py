@@ -216,28 +216,28 @@ class LLMProviderClientBase(ABC):
                 # Combine first message and last k messages
                 indices_to_keep = [first_user_idx] + last_indices_to_keep
 
-                logger.debug("\n=======>>>>>> Message retention summary:")
-                logger.debug(f"Total user messages: {len(user_indices)}")
-                logger.debug(f"Keeping first message at index: {first_user_idx}")
-                logger.debug(
+                logger.info("\n=======>>>>>> Message retention summary:")
+                logger.info(f"Total user messages: {len(user_indices)}")
+                logger.info(f"Keeping first message at index: {first_user_idx}")
+                logger.info(
                     f"Keeping last {num_to_keep} messages at indices: {last_indices_to_keep}"
                 )
-                logger.debug(f"Total messages to keep: {len(indices_to_keep)}")
+                logger.info(f"Total messages to keep: {len(indices_to_keep)}")
 
                 for i, msg in enumerate(messages_copy):
                     if (
                         msg.get("role") == "user" or msg.get("role") == "tool"
                     ) and i not in indices_to_keep:
-                        logger.debug(f"Omitting content for user message at index {i}")
+                        logger.info(f"Omitting content for user message at index {i}")
                         msg["content"] = "Tool result is omitted to save tokens."
             elif user_indices:  # This means only 1 user message exists
-                logger.debug(
+                logger.info(
                     "\n=======>>>>>> Only 1 user message found. Keeping it as is."
                 )
             else:  # No user messages at all
-                logger.debug("\n=======>>>>>> No user messages found in the history.")
+                logger.info("\n=======>>>>>> No user messages found in the history.")
 
-            logger.debug(
+            logger.info(
                 f"\n\n=======>>>>>> Messages after potential content omission: {json.dumps(messages_copy, indent=4, ensure_ascii=False)}\n\n"
             )
         elif keep_tool_result == -1:

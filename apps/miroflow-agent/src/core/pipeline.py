@@ -69,7 +69,7 @@ async def execute_task_pipeline(
         - The final boxed answer.
         - The path to the log file.
     """
-    logger.debug(f"\n--- Starting Task Execution: {task_id} ---")
+    logger.info(f"\n--- Starting Task Execution: {task_id} ---")
 
     # Create task log
     task_log = TaskLog(
@@ -152,7 +152,7 @@ async def execute_task_pipeline(
         )
         task_log.save()
 
-        logger.debug(f"--- Finished Task Execution: {task_id} ---")
+        logger.info(f"--- Finished Task Execution: {task_id} ---")
 
 
 def _process_spans_for_summary(trace_obj, cfg):

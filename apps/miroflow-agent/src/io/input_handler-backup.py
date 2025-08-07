@@ -529,7 +529,7 @@ def XlsxConverter(local_path: str):
                 continue
         except Exception as e:
             error_msg = f"Error processing sheet '{sheet_name}': {str(e)}"
-            logger.debug(error_msg)
+            logger.info(error_msg)
             md_content += (
                 f"## {sheet_name}\n\nError processing this sheet: {str(e)}\n\n"
             )
@@ -548,7 +548,7 @@ def XlsxConverter(local_path: str):
                         cell_value = str(cell.value) if cell.value is not None else ""
                         max_length = max(max_length, len(cell_value))
                     except Exception as e:
-                        logger.debug(
+                        logger.info(
                             f"Warning: Error processing cell at row {row_idx}, column {col_idx}: {str(e)}"
                         )
                         max_length = max(max_length, 10)  # Use reasonable default
@@ -579,7 +579,7 @@ def XlsxConverter(local_path: str):
                         try:
                             format_info = get_cell_format_info(cell)
                         except Exception as e:
-                            logger.debug(
+                            logger.info(
                                 f"Warning: Error getting formatting for cell at row {row_idx}, column {col_idx}: {str(e)}"
                             )
                             format_info = {}
@@ -624,7 +624,7 @@ def XlsxConverter(local_path: str):
                         padded_value = " " + formatted_value + " " * (padding + 1)
                         md_content += padded_value + "|"
                     except Exception as e:
-                        logger.debug(
+                        logger.info(
                             f"Error processing cell at row {row_idx}, column {col_idx}: {str(e)}"
                         )
                         # Add a placeholder for the failed cell
@@ -634,7 +634,7 @@ def XlsxConverter(local_path: str):
                 md_content += "\n"
         except Exception as e:
             error_msg = f"Error generating table for sheet '{sheet_name}': {str(e)}\n{traceback.format_exc()}"
-            logger.debug(error_msg)
+            logger.info(error_msg)
             md_content += f"Error generating table: {str(e)}\n\n"
 
         # Add formatting legend

@@ -108,9 +108,9 @@ def generate_summary(log_dir: Path):
             with open(log_file, "r", encoding="utf-8") as f:
                 results.append(json.load(f))
         except json.JSONDecodeError:
-            logger.debug(f"Warning: Could not decode JSON from {log_file}. Skipping.")
+            logger.info(f"Warning: Could not decode JSON from {log_file}. Skipping.")
         except Exception as e:
-            logger.debug(f"Warning: Could not read file {log_file}: {e}. Skipping.")
+            logger.info(f"Warning: Could not read file {log_file}: {e}. Skipping.")
 
     overall_summary = _get_summary_template()
     summary_by_judge = defaultdict(_get_summary_template)
@@ -146,7 +146,7 @@ def generate_summary(log_dir: Path):
     with open(summary_file, "w", encoding="utf-8") as f:
         json.dump(summary_data, f, indent=4)
 
-    logger.debug(f"Summary generated and saved to {summary_file}")
+    logger.info(f"Summary generated and saved to {summary_file}")
 
 
 if __name__ == "__main__":
@@ -162,7 +162,7 @@ if __name__ == "__main__":
 
     log_dir_path = Path(args.log_dir)
     if not log_dir_path.is_dir():
-        logger.debug(
+        logger.info(
             "Error: The specified log directory does not exist or is not a directory: "
             f"{log_dir_path}"
         )

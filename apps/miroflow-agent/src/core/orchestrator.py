@@ -196,6 +196,12 @@ class Orchestrator:
             )
             self.task_log.save()
 
+            # Reset 'last_call_tokens'
+            self.llm_client.last_call_tokens = {
+                "prompt_tokens": 0,
+                "completion_tokens": 0,
+            }
+
             # Use unified LLM call processing
             (
                 assistant_response_text,
@@ -473,7 +479,7 @@ class Orchestrator:
         tool_definitions = await self.main_agent_tool_manager.get_all_tool_definitions()
         tool_definitions += expose_sub_agents_as_tools(self.cfg.agent.sub_agents)
         if not tool_definitions:
-            logger.debug(
+            logger.info(
                 "Warning: No tool definitions found. LLM cannot use any tools."
             )
 
@@ -492,9 +498,10 @@ class Orchestrator:
         max_turns = self.cfg.agent.main_agent.max_turns
         turn_count = 0
         error_msg = ""
+        tool_calls = []
         while turn_count < max_turns:
             turn_count += 1
-            logger.debug(f"\n--- Main Agent Turn {turn_count} ---")
+            logger.info(f"\n--- Main Agent Turn {turn_count} ---")
             self.task_log.save()
 
             # Use unified LLM call processing
@@ -548,6 +555,8 @@ class Orchestrator:
                 f"Number of tool calls detected: {len(tool_calls)}",
                 "info",
             )
+
+            main_agent_last_call_tokens = self.llm_client.last_call_tokens
 
             for call in tool_calls:
                 server_name = call["server_name"]
@@ -632,6 +641,9 @@ class Orchestrator:
                     tool_result
                 )
                 all_tool_results_content_with_id.append((call_id, tool_result_for_llm))
+
+            # Update 'last_call_tokens'
+            self.llm_client.last_call_tokens = main_agent_last_call_tokens
 
             # Update message history with tool calls data (llm client specific)
             message_history = self.llm_client.update_message_history(

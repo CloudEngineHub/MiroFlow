@@ -87,7 +87,7 @@ class SynchronousMultiTracingProcessor(TracingProcessor):
         Called when the application stops.
         """
         for processor in self._processors:
-            logger.debug(f"Shutting down trace processor {processor}")
+            logger.info(f"Shutting down trace processor {processor}")
             processor.shutdown()
 
     def force_flush(self):
@@ -231,12 +231,12 @@ class DefaultTraceProvider(TraceProvider):
         Create a new trace.
         """
         if self._disabled or disabled:
-            logger.debug(f"Tracing is disabled. Not creating trace {name}")
+            logger.info(f"Tracing is disabled. Not creating trace {name}")
             return NoOpTrace()
 
         trace_id = trace_id or self.gen_trace_id()
 
-        logger.debug(f"Creating trace {name} with id {trace_id}")
+        logger.info(f"Creating trace {name} with id {trace_id}")
 
         return TraceImpl(
             name=name,
@@ -257,7 +257,7 @@ class DefaultTraceProvider(TraceProvider):
         Create a new span.
         """
         if self._disabled or disabled:
-            logger.debug(f"Tracing is disabled. Not creating span {span_data}")
+            logger.info(f"Tracing is disabled. Not creating span {span_data}")
             return NoOpSpan(span_data)
 
         if not parent:
@@ -272,7 +272,7 @@ class DefaultTraceProvider(TraceProvider):
             elif isinstance(current_trace, NoOpTrace) or isinstance(
                 current_span, NoOpSpan
             ):
-                logger.debug(
+                logger.info(
                     f"Parent {current_span} or {current_trace} is no-op, returning NoOpSpan"
                 )
                 return NoOpSpan(span_data)
@@ -282,18 +282,18 @@ class DefaultTraceProvider(TraceProvider):
 
         elif isinstance(parent, Trace):
             if isinstance(parent, NoOpTrace):
-                logger.debug(f"Parent {parent} is no-op, returning NoOpSpan")
+                logger.info(f"Parent {parent} is no-op, returning NoOpSpan")
                 return NoOpSpan(span_data)
             trace_id = parent.trace_id
             parent_id = None
         elif isinstance(parent, Span):
             if isinstance(parent, NoOpSpan):
-                logger.debug(f"Parent {parent} is no-op, returning NoOpSpan")
+                logger.info(f"Parent {parent} is no-op, returning NoOpSpan")
                 return NoOpSpan(span_data)
             parent_id = parent.span_id
             trace_id = parent.trace_id
 
-        logger.debug(f"Creating span {span_data} with id {span_id}")
+        logger.info(f"Creating span {span_data} with id {span_id}")
 
         return SpanImpl(
             trace_id=trace_id,
@@ -308,7 +308,7 @@ class DefaultTraceProvider(TraceProvider):
             return
 
         try:
-            logger.debug("Shutting down trace provider")
+            logger.info("Shutting down trace provider")
             self._multi_processor.shutdown()
         except Exception as e:
             logger.error(f"Error shutting down trace provider: {e}")

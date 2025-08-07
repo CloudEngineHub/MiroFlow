@@ -81,7 +81,7 @@ def parse_llm_response_for_tool_calls(llm_response_content_text):
                 # Try to handle possible newlines and escape characters
                 arguments = json.loads(arguments_str)
             except json.JSONDecodeError:
-                logger.debug(
+                logger.info(
                     f"Warning: Unable to parse tool arguments JSON: {arguments_str}"
                 )
                 # Try more lenient parsing or log error
@@ -94,11 +94,11 @@ def parse_llm_response_for_tool_calls(llm_response_content_text):
                         .replace("False", "false")
                     )
                     arguments = json.loads(arguments_str_fixed)
-                    logger.debug(
+                    logger.info(
                         "Info: Successfully parsed arguments after attempting to fix."
                     )
                 except json.JSONDecodeError:
-                    logger.debug(
+                    logger.info(
                         f"Error: Still unable to parse tool arguments JSON after fixing: {arguments_str}"
                     )
                     arguments = {
@@ -135,7 +135,7 @@ def parse_llm_response_for_tool_calls(llm_response_content_text):
             # Try to handle possible newlines and escape characters
             arguments = json.loads(arguments_str)
         except json.JSONDecodeError:
-            logger.debug(
+            logger.info(
                 f"Warning: Unable to parse tool arguments JSON: {arguments_str}"
             )
             # Try more lenient parsing or log error
@@ -148,11 +148,11 @@ def parse_llm_response_for_tool_calls(llm_response_content_text):
                     .replace("False", "false")
                 )
                 arguments = json.loads(arguments_str_fixed)
-                logger.debug(
+                logger.info(
                     "Info: Successfully parsed arguments after attempting to fix."
                 )
             except json.JSONDecodeError:
-                logger.debug(
+                logger.info(
                     f"Error: Still unable to parse tool arguments JSON after fixing: {arguments_str}"
                 )
                 arguments = {"error": "Failed to parse arguments", "raw": arguments_str}

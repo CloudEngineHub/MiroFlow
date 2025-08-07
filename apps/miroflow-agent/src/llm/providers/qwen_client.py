@@ -39,7 +39,7 @@ class QwenLLMClient(LLMProviderClientBase):
         http_client_args = {}
         if os.environ.get("HTTPS_PROXY"):
             http_client_args["proxy"] = os.environ.get("HTTPS_PROXY")
-            logger.debug(f"Info: Using proxy {http_client_args['proxy']}")
+            logger.info(f"Info: Using proxy {http_client_args['proxy']}")
 
         if self.async_client:
             return AsyncOpenAI(
@@ -75,7 +75,7 @@ class QwenLLMClient(LLMProviderClientBase):
             self.token_usage["total_output_tokens"] += output_tokens
             self.token_usage["total_cache_read_input_tokens"] += cached_tokens
 
-            logger.debug(
+            logger.info(
                 f"Current round token usage - Input: {self.token_usage['total_input_tokens']}, "
                 f"Output: {self.token_usage['total_output_tokens']}"
             )
@@ -182,7 +182,7 @@ class QwenLLMClient(LLMProviderClientBase):
 
         if not llm_response or not llm_response.choices:
             error_msg = "LLM did not return a valid response."
-            logger.debug(f"Error: {error_msg}")
+            logger.info(f"Error: {error_msg}")
             return "", True, message_history  # Exit loop, return message_history
 
         # Extract LLM response text
