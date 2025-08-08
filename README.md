@@ -1,7 +1,7 @@
 # MiroFlow: Open Agent Development Framework
 
 <div align="center">
-  <img src="assets/miro_thinker.png" width="50%" alt="MiroMindM1" />
+  <img src="assets/miro_thinker.png" width="50%" alt="MiroFlow" />
 </div>
 <!-- <hr> -->
 <div align="center">
@@ -9,10 +9,9 @@
 [![DEMO](https://img.shields.io/badge/Demo-FFB300?style=for-the-badge&logo=airplayvideo&logoColor=white)](https://dr.miromind.ai/)
 [![MODELS](https://img.shields.io/badge/Models-5EDDD2?style=for-the-badge&logo=huggingface&logoColor=ffffff&labelColor)](https://huggingface.co/collections/miromind-ai/mirothinker-v01-689301b6d0563321862d44a1)
 [![DATA](https://img.shields.io/badge/Data-0040A1?style=for-the-badge&logo=huggingface&logoColor=ffffff&labelColor)](https://huggingface.co/datasets/miromind-ai/MiroVerse-v0.1)
-[![BLOG](https://img.shields.io/badge/BLOG-000000?style=for-the-badge&logo=google-chrome&logoColor=white)](https://miromind.ai/)
 [![GITHUB](https://img.shields.io/badge/Code-24292F?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MiroMindAI/MiroFlow/tree/mirothinker)
 [![WEBSITE](https://img.shields.io/badge/Website-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://miromind.ai/)
-[![DISCORD](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://miromind.ai/)
+[![DISCORD](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/invite/EprKHYcm)
 
 </div>
 
@@ -174,6 +173,10 @@ python benchmarks/evaluators/check_progress_gaia-validation-text-103.py /path/to
 We also provide the option to use open-source tools as alternatives to proprietary models and tools. For detailed setup and configuration instructions, please refer to our documentation: [USE-OS-TOOL.md](assets/USE-OS-TOOL.md).
 
 ## 📈 Benchmark Evaluation
+<div align="center">
+  <img src="assets/gaia_text_103.png" width="80%" alt="MiroFlow Performance on GAIA-Validation" />
+  <p><strong>Performance of MiroFlow on GAIA-Validation Benchmark</strong></p>
+</div>
 
 For comprehensive evaluation results and detailed performance metrics, please refer to our model card at [MiroThinker Model Card](https://huggingface.co/collections/miromind-ai/mirothinker-v01-689301b6d0563321862d44a1).
 
