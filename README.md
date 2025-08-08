@@ -1,16 +1,18 @@
 # MiroFlow: Open Agent Development Framework
 
 <div align="center">
-  <img src="assets/MiromindAI_H.svg" width="50%" alt="MiroMindM1" />
+  <img src="assets/miro_thinker.png" width="50%" alt="MiroMindM1" />
 </div>
 <!-- <hr> -->
 <div align="center">
 
-[![Models](https://img.shields.io/badge/Models-5EDDD2?style=for-the-badge&logo=huggingface&logoColor=ffffff&labelColor)](https://huggingface.co/miromind-ai/xx)
-[![Data](https://img.shields.io/badge/Data-0040A1?style=for-the-badge&logo=huggingface&logoColor=ffffff&labelColor)](https://huggingface.co/datasets/miromind-ai/xx)
-[![Paper](https://img.shields.io/badge/Paper-000000?style=for-the-badge&logo=arxiv&logoColor=white)](https://arxiv.org/abs/xx)
-[![Github](https://img.shields.io/badge/Code-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MiroMindAsia/xx)
-[![Website](https://img.shields.io/badge/Website-000000?style=for-the-badge&logo=google-chrome&logoColor=white)](https://miromind.ai/)
+[![DEMO](https://img.shields.io/badge/Demo-FFB300?style=for-the-badge&logo=airplayvideo&logoColor=white)](https://dr.miromind.ai/)
+[![MODELS](https://img.shields.io/badge/Models-5EDDD2?style=for-the-badge&logo=huggingface&logoColor=ffffff&labelColor)](https://huggingface.co/collections/miromind-ai/mirothinker-v01-689301b6d0563321862d44a1)
+[![DATA](https://img.shields.io/badge/Data-0040A1?style=for-the-badge&logo=huggingface&logoColor=ffffff&labelColor)](https://huggingface.co/datasets/miromind-ai/MiroVerse-v0.1)
+[![BLOG](https://img.shields.io/badge/BLOG-000000?style=for-the-badge&logo=google-chrome&logoColor=white)](https://miromind.ai/)
+[![GITHUB](https://img.shields.io/badge/Code-24292F?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MiroMindAI/MiroFlow/tree/mirothinker)
+[![WEBSITE](https://img.shields.io/badge/Website-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://miromind.ai/)
+[![DISCORD](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://miromind.ai/)
 
 </div>
 
@@ -19,6 +21,11 @@
 > **⚠️ Branch Notice**: This is the **MiroFlow-MiroThinker** branch for MiroThinker models. For general use cases, see the `main` branch.
 
 A comprehensive framework for building, testing, and deploying intelligent agents powered by MiroThinker models with multi-turn conversation capabilities and advanced tool integration.
+
+
+## 📰 News & Updates
+
+- **2025-08-08**: 🎉 **MiroFlow v0.1 Released** - Framework, models, and data collection now fully open-source
 
 ## 🎯 Overview
 
@@ -95,7 +102,29 @@ SILICONFLOW_API_KEY=your_siliconflow_key
 
 ### Serve the MiroThinker Model
 
-**TODO:** Add instructions for serving the MiroThinker model locally
+Use SGLang to serve MiroThinker models at port 61002:
+```
+PORT=61002
+MODEL_PATH=miromind-ai/MiroThinker-32B-DPO-v0.1
+
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+python3 -m sglang.launch_server \
+    --model-path $MODEL_PATH \
+    --tp 8 \
+    --dp 1 \
+    --host 0.0.0.0 \
+    --port $PORT \
+    --trust-remote-code \
+    --log-level debug \
+    --log-level-http debug \
+    --log-requests \
+    --log-requests-level 2 \
+    --attention-backend flashinfer \
+    --enable-metrics \
+    --show-time-cost \
+    --chat-template assets/qwen3_nonthinking.jinja
+```
+This will start a server at: `http://0.0.0.0:61002`. Use this as your server base URL.
 
 ### Basic Usage
 
@@ -142,26 +171,26 @@ python benchmarks/evaluators/check_progress_gaia-validation-text-103.py /path/to
 
 ## 🛠️ (Optional) Using Open-Source Tools
 
-We also provide an option to use open-source tools instead of proprietary models/tools. Please refer to our documentation [USE-OS-TOOL.md](assets/USE-OS-TOOL.md) for more instructions.
+We also provide the option to use open-source tools as alternatives to proprietary models and tools. For detailed setup and configuration instructions, please refer to our documentation: [USE-OS-TOOL.md](assets/USE-OS-TOOL.md).
 
 ## 📈 Benchmark Evaluation
 
-**TODO:** Put evaluation results here
-
-| Benchmark | MiroThinker | MODEL-Y | MODEL-X |
-|-----------|-------------|--------|---------|
-| GAIA Validation | Coming Soon | - | - |
-| GAIA-Text-103 | Coming Soon | - | - |
-| WebWalkerQA | Coming Soon | - | - |
-| HLE | Coming Soon | - | - |
-| HLE-Text-500 | Coming Soon | - | - |
-| BrowseComp | Coming Soon | - | - |
-| Frames | Coming Soon | - | - |
+For comprehensive evaluation results and detailed performance metrics, please refer to our model card at [MiroThinker Model Card](https://huggingface.co/collections/miromind-ai/mirothinker-v01-689301b6d0563321862d44a1).
 
 
 ## 📊 Trace Collection
 
-**TODO:** Put trace collection
+The trace collection scripts automatically save logs in the `logs/` directory in `chatml` format.
+
+```bash
+cd apps/collect-trace
+
+# Collect Claude Traces for Imitation Learning - SFT
+bash scripts/run_benchmark_claude.sh
+
+# Collect MitoThinker Traces for DPO purposes
+bash scripts/run_benchmark_qwen.sh
+```
 
 ## 📄 License
 
@@ -174,5 +203,5 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/MiroMindAsia/miroflow/issues)
-- **QA Documentation**: See [QA.md](assets/QA.md) for additional quality assurance guidelines
+- **Issues**: For questions or bug reports, please use [GitHub Issues](https://github.com/MiroMindAI/MiroFlow/tree/mirothinker) and include the tag `[Question-MiroThinker]` when referring to this branch.
+- **QA Documentation**: See [QA.md](assets/QA.md) for additional guidelines
