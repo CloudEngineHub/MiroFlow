@@ -212,9 +212,11 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 - **QA Documentation**: See [QA.md](assets/QA.md) for additional guidelines
 
 ### Citation
+```
 @misc{2025mirothinker,
-    title={MiroTrain: An Efficient and Algorithm-First Framework for Post-Training Large Agentic Models},
-    author={MiroMind AI Infra Team},
-    howpublished = {\url{https://github.com/MiroMindAI/MiroTrain}},
+    title={MiroThinker is an open-source agentic model series trained for deep research and complex, long-horizon problem solving.},
+    author={MiroMind AI Team},
+    howpublished = {\url{https://github.com/MiroMindAI/MiroThinker}},
     year={2025}
 }
+```
