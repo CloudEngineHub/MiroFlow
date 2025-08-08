@@ -11,7 +11,7 @@
 [![DATA](https://img.shields.io/badge/Data-0040A1?style=for-the-badge&logo=huggingface&logoColor=ffffff&labelColor)](https://huggingface.co/datasets/miromind-ai/MiroVerse-v0.1)
 [![GITHUB](https://img.shields.io/badge/Code-24292F?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MiroMindAI/MiroFlow/tree/mirothinker)
 [![WEBSITE](https://img.shields.io/badge/Website-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://miromind.ai/)
-[![DISCORD](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/invite/EprKHYcm)
+[![DISCORD](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/invite/GPqEnkzQZd)
 
 </div>
 
@@ -210,3 +210,11 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 - **Issues**: For questions or bug reports, please use [GitHub Issues](https://github.com/MiroMindAI/MiroFlow/tree/mirothinker) and include the tag `[Question-MiroThinker]` when referring to this branch.
 - **QA Documentation**: See [QA.md](assets/QA.md) for additional guidelines
+
+### Citation
+@misc{2025mirothinker,
+    title={MiroTrain: An Efficient and Algorithm-First Framework for Post-Training Large Agentic Models},
+    author={MiroMind AI Infra Team},
+    howpublished = {\url{https://github.com/MiroMindAI/MiroTrain}},
+    year={2025}
+}
