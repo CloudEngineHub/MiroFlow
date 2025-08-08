@@ -67,9 +67,10 @@ git checkout mirothinker
 
 2. **Download benchmark data**
 ```bash
-wget https://huggingface.co/datasets/miromind-ai/MiroFlow-Benchmarks/resolve/main/data_20250808.zip
-unzip data_20250808.zip
-rm data_20250808.zip
+wget https://huggingface.co/datasets/miromind-ai/MiroFlow-Benchmarks/resolve/main/data_20250808_password_protected.zip
+unzip data_20250808_password_protected.zip
+# The unzip passcode is: `pf4*`.
+rm data_20250808_password_protected.zip
 ```
 
 3. **Set up environment**
@@ -103,13 +104,13 @@ SILICONFLOW_API_KEY=your_siliconflow_key
 
 Use SGLang to serve MiroThinker models at port 61002:
 ```
+NUM_GPUS=4
 PORT=61002
 MODEL_PATH=miromind-ai/MiroThinker-32B-DPO-v0.1
 
-export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 python3 -m sglang.launch_server \
     --model-path $MODEL_PATH \
-    --tp 8 \
+    --tp $NUM_GPUS \
     --dp 1 \
     --host 0.0.0.0 \
     --port $PORT \
@@ -123,11 +124,12 @@ python3 -m sglang.launch_server \
     --show-time-cost \
     --chat-template assets/qwen3_nonthinking.jinja
 ```
-This will start a server at: `http://0.0.0.0:61002`. Use this as your server base URL.
+This will start a server at: `http://0.0.0.0:$PORT$`. Use this as your server base URL.
 
 ### Basic Usage
 
 1. **Run a single evaluation**
+
 ```bash
 cd apps/miroflow-agent
 uv run main.py llm=qwen3-32b agent=evaluation llm.openai_base_url=https://your-api.com/v1
